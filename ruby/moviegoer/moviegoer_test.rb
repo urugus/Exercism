@@ -7,7 +7,7 @@ class MoviegoerTest < Minitest::Test
   end
 
   def test_seniors_discount
-    assert_equal 10, Moviegoer.new(60).ticket_price
+    assert_equal 10, Moviegoer.new(69).ticket_price
   end
 
   def test_adults_can_see_the_scary_movie

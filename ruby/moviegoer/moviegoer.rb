@@ -4,6 +4,9 @@ end
 
 class Moviegoer
   attr_reader :age, :member
+  
+  TICKET_PRICE_TABLE = [{age: 1..59, price: 15}, {age: 60.., price: 10}]
+  LIMIT_LINE_AGE = 18
 
   def initialize(age, member: false)
     @age = age
@@ -11,15 +14,20 @@ class Moviegoer
   end
 
   def ticket_price
-    raise 'Please implement the Moviegoer#ticket_price method'
+    TICKET_PRICE_TABLE.find{|tpt| tpt[:age].include?(@age)}[:price] || 0
   end
 
   def watch_scary_movie?
-    raise 'Please implement the Moviegoer#watch_scary_movie method'
+    @age >= LIMIT_LINE_AGE
   end
 
   # Popcorn is 🍿
   def claim_free_popcorn!
-    raise 'Please implement the Moviegoer#claim_free_popcorn method'
+    if @member
+      "🍿"
+    else
+      raise NotMovieClubMemberError
+    end
   end
+
 end
