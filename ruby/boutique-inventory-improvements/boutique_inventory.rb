@@ -8,10 +8,10 @@ class BoutiqueInventory
   end
 
   def item_names
-    @items.map { |item| item.name }.sort
+    @items.map(&:name).sort
   end
 
   def total_stock
-    @items.sum{|item| item.quantity_by_size.values.sum}
+    @items.map(&:quantity_by_size).map(&:values).sum(&:sum)
   end
 end
