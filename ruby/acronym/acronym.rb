@@ -1,7 +1,8 @@
-=begin
-Write your code for the 'Acronym' exercise in this file. Make the tests in
-`acronym_test.rb` pass.
-
-To get started with TDD, see the `README.md` file in your
-`ruby/acronym` directory.
-=end
+class Acronym
+  class << self
+    def abbreviate(words)
+      words_list = words.scan(/[A-z]+|[A-z]+-/)
+      words_list.map{|w| w[0]}.join().upcase
+    end
+  end
+end
