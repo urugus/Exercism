@@ -1,7 +1,13 @@
-=begin
-Write your code for the 'Hamming' exercise in this file. Make the tests in
-`hamming_test.rb` pass.
+class Hamming
+  class << self
+    def compute(dna1, dna2)
+      # binding.irb
+      raise ArgumentError if dna1.length != dna2.length
+      dna1.chars.each_with_index.inject(0) {|mistakes, (d1, idx)|
+        d1 != dna2[idx] ? mistakes += 1 : mistakes
+      }
+    end
+  end
+end
 
-To get started with TDD, see the `README.md` file in your
-`ruby/hamming` directory.
-=end
+puts Hamming.compute('GGACTGAAATCTG', 'AAACTGAAATCTG')
