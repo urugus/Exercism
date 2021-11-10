@@ -6,7 +6,7 @@ class Series
 
   def slices(len)
     raise ArgumentError if @digits_string.length < len
-    ans_array = (@digits_string.length - len + 1).times.inject([]) do |array, idx|
+    (@digits_string.length - len + 1).times.inject([]) do |array, idx|
       array << @digits_string[idx..(idx + len-1)]
     end
   end
