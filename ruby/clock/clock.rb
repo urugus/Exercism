@@ -13,7 +13,6 @@ class Clock
   def initialize(hour: 0, minute: 0)
     @hour = (hour + minute / 60) % 24
     @minute = minute % 60 
-    @minute_only = (hour * 60 + minute) % (60 * 24)
   end
 
 
@@ -30,7 +29,7 @@ class Clock
   end
 
   def to_s
-    "#{@hour.to_s.rjust(2,'0')}:#{@minute.to_s.rjust(2,'0')}"
+    [@hour, @minute].map{|t| t.to_s.rjust(2,'0')}.join(':')
   end
 
 end
