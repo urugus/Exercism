@@ -1,7 +1,8 @@
-=begin
-Write your code for the 'Pangram' exercise in this file. Make the tests in
-`pangram_test.rb` pass.
-
-To get started with TDD, see the `README.md` file in your
-`ruby/pangram` directory.
-=end
+class Pangram
+  class << self
+    ALPHABET_WORDS_COUNT = 26
+    def pangram?(sentence)
+      sentence.gsub(/[^a-zA-Z]+/,'').downcase.chars.uniq.length == ALPHABET_WORDS_COUNT
+    end
+  end
+end
