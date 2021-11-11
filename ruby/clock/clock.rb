@@ -8,11 +8,14 @@ To get started with TDD, see the `README.md` file in your
 
 
 class Clock
-  attr_accessor :hour, :minute
+  attr_reader :hour, :minute
+  
+  ONE_DAY_IN_HOURS = 24
+  ONE_HOUR_IN_MINUTES = 60
 
   def initialize(hour: 0, minute: 0)
-    @hour = (hour + minute / 60) % 24
-    @minute = minute % 60 
+    @hour = (hour + minute / ONE_HOUR_IN_MINUTES) % ONE_DAY_IN_HOURS
+    @minute = minute % ONE_HOUR_IN_MINUTES
   end
 
 
