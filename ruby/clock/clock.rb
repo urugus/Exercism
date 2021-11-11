@@ -8,35 +8,29 @@ To get started with TDD, see the `README.md` file in your
 
 
 class Clock
-  attr_accessor :minute_only
+  attr_accessor :hour, :minute
 
   def initialize(hour: 0, minute: 0)
-    @hour = hour
-    @minute = minute
+    @hour = (hour + minute / 60) % 24
+    @minute = minute % 60 
     @minute_only = (hour * 60 + minute) % (60 * 24)
   end
 
 
   def ==(other)
-    @minute_only == other.minute_only
+    @hour == other.hour && @minute == other.minute
   end
 
   def +(other)
-    Clock.new(minute: @minute_only + other.minute_only)
+    Clock.new(hour: @hour + other.hour, minute: @minute + other.minute)
   end
 
   def -(other)
-    Clock.new(minute: @minute_only - other.minute_only)
+    Clock.new(hour: @hour - other.hour, minute: @minute - other.minute)
   end
 
   def to_s
-    h = ((@hour + @minute / 60) % 24).abs
-    m = ((60 + @minute % 60) % 60 ).abs
-    "#{h.to_s.rjust(2,'0')}:#{m.to_s.rjust(2,'0')}"
+    "#{@hour.to_s.rjust(2,'0')}:#{@minute.to_s.rjust(2,'0')}"
   end
 
 end
-
-  # binding.irb
-
-  # clock = Clock.new(hour: 6, minute: 41)
