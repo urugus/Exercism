@@ -56,5 +56,3 @@ class Item
   end
 
 end
-
-puts BeerSong.recite(99, 2)
