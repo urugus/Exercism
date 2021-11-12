@@ -3,7 +3,19 @@ class BeerSong
   MAX_STOCK = 99
   
   class << self
+    
+    def recite(quantity, loop_time)
+      beer = Item.new(name: 'beer', quantity: quantity, unit: 'bottle')
+      beer_consumption = Item.new(name: 'beer', quantity: 1, unit: 'bottle')
 
+      phrases = loop_time.times.inject([]) { |phrases, c|
+        phrases << sing_one_phrase(beer, beer = beer - beer_consumption)
+      }.join("\n")
+    end
+
+
+    private
+    
     def sing_one_phrase(item, item_after_consume)
       phrase = "#{item.count.capitalize} of #{item.name} on the wall, #{item.count} of #{item.name}.\n"
       phrase += if item.quantity == 0
@@ -14,14 +26,6 @@ class BeerSong
           end
     end
 
-    def recite(quantity, loop_time)
-      beer = Item.new(name: 'beer', quantity: quantity, unit: 'bottle')
-      beer_consumption = Item.new(name: 'beer', quantity: 1, unit: 'bottle')
-
-      phrases = loop_time.times.inject([]) { |phrases, c|
-        phrases << sing_one_phrase(beer, beer = beer - beer_consumption)
-      }.join("\n")
-    end
   end
 end
 
