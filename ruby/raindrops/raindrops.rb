@@ -4,11 +4,11 @@ class Raindrops
 
   class << self
     def convert(num)
-      ans = FACTORS.each_with_object([]){ |(k, v), a|
+      ans = FACTORS.each_with_object(''){ |(k, v), t|
         if num % v == 0 
-          a << k.to_s
+          t << k.to_s
         end
-      }.join
+      }
 
       ans == '' ? num.to_s : ans
     end
