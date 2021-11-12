@@ -1,7 +1,16 @@
-=begin
-Write your code for the 'Raindrops' exercise in this file. Make the tests in
-`raindrops_test.rb` pass.
+class Raindrops
 
-To get started with TDD, see the `README.md` file in your
-`ruby/raindrops` directory.
-=end
+  FACTORS = {'Pling': 3, 'Plang': 5, 'Plong': 7}
+
+  class << self
+    def convert(num)
+      ans = FACTORS.each_with_object([]){ |(k, v), a|
+        if num % v == 0 
+          a << k.to_s
+        end
+      }.join
+
+      ans == '' ? num.to_s : ans
+    end
+  end
+end
