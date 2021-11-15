@@ -9,6 +9,12 @@ class Scrabble
     {letters: %w[j x], value: 8},
     {letters: %w[q z], value: 10}
   ]
+
+  class << self
+    def score(word)
+      Scrabble.new(word).score
+    end
+  end
   
   def initialize(word)
     @alpahbet = word 
@@ -23,5 +29,6 @@ class Scrabble
       }
     }  
   end
+
 
 end
