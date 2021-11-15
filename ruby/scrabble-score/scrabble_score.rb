@@ -17,13 +17,11 @@ class Scrabble
   def score
     return 0 if @alpahbet.nil?
 
-    sum = @alpahbet.downcase.chars.inject(0){|subtotal, a| 
-       SCORE.each {|sc|
-        sc[:letters].include?(a) ? subtotal += sc[:value] : subtotal
+    sum = @alpahbet.downcase.chars.inject(0){|subtotal, a|
+        subtotal += SCORE.each.inject(0) {|v, sc|
+        sc[:letters].include?(a) ? v += sc[:value] : v
       }
     }  
   end
 
 end
-
-Scrabble.new('fact').score
