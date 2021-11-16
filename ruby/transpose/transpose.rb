@@ -1,7 +1,14 @@
-=begin
-Write your code for the 'Transpose' exercise in this file. Make the tests in
-`transpose_test.rb` pass.
+class Transpose
+  class << self
+    def transpose(input)
+      return '' if input == ''
+      rows = input.split("\n")
+      row_max_size = rows.sort[-1].size
+      transposed_rows = rows.map{|a| a.ljust(row_max_size, '0').chars}
+      .transpose.map(&:join).map{|t| t.gsub(/0/, '')}.join("\n")
+    end
+  end
+end
 
-To get started with TDD, see the `README.md` file in your
-`ruby/transpose` directory.
-=end
+input = "The longest line.\nA long line.\nA longer line.\nA line."
+p Transpose.transpose(input)
