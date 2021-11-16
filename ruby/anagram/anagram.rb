@@ -1,7 +1,11 @@
-=begin
-Write your code for the 'Anagram' exercise in this file. Make the tests in
-`anagram_test.rb` pass.
+class Anagram
+  def initialize(word)
+    @word = word.downcase
+  end
 
-To get started with TDD, see the `README.md` file in your
-`ruby/anagram` directory.
-=end
+  def match(words)
+    words.sort.each_with_object([]){|w, a|
+      a << w if w.downcase.chars.sort == @word.chars.sort && w.downcase != @word
+    }
+  end
+end
