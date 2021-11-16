@@ -1,19 +1,8 @@
-class ArmstrongNumber
+class ArmstrongNumbers
   class << self
-    def calc(upper_limit_num)
-      [*0..upper_limit_num].each_with_object([]){|n, an|
-          an << n if is_armstrong_number?(n)
-      }
-    end
-
-    private
-    def is_armstrong_number?(n)
-      digits = n.to_s.chars.map(&:to_i)
-      n == digits.map{|n| n.to_i ** digits.length}.sum
+    def include?(number)
+      digits = number.digits
+      digits.sum{|d| d**digits.length} == number
     end
   end
-  
-
 end
-
-ArmstrongNumbers = ArmstrongNumber.calc(10 ** 8)
