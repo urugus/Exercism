@@ -8,3 +8,11 @@ class TwelveDaysTest < Minitest::Test
     assert_equal expected, TwelveDays.song
   end
 end
+
+
+class OrdinalMethodTest < Minitest::Test
+  def test_ordinal_method
+    assert_equal 'first', 1.to_ord
+    assert_equal 'fourth', 4.to_ord
+  end
+end
