@@ -1,7 +1,19 @@
-=begin
-Write your code for the 'Armstrong Numbers' exercise in this file. Make the tests in
-`armstrong_numbers_test.rb` pass.
+class ArmstrongNumber
+  class << self
+    def calc(upper_limit_num)
+      [*0..upper_limit_num].each_with_object([]){|n, an|
+          an << n if is_armstrong_number?(n)
+      }
+    end
 
-To get started with TDD, see the `README.md` file in your
-`ruby/armstrong-numbers` directory.
-=end
+    private
+    def is_armstrong_number?(n)
+      digits = n.to_s.chars.map(&:to_i)
+      n == digits.map{|n| n.to_i ** digits.length}.sum
+    end
+  end
+  
+
+end
+
+ArmstrongNumbers = ArmstrongNumber.calc(10 ** 8)
