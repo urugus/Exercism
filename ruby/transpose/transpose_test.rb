@@ -44,7 +44,6 @@ class TransposeTest < Minitest::Test
     input = "Single line."
 
     expected = "S\ni\nn\ng\nl\ne\n \nl\ni\nn\ne\n."
-
     assert_equal expected, Transpose.transpose(input)
   end
 
@@ -62,7 +61,6 @@ class TransposeTest < Minitest::Test
     input = "The first line.\nThe second line."
 
     expected = "TT\nhh\nee\n  \nfs\nie\nrc\nso\ntn\n d\nl \nil\nni\nen\n.e\n ."
-               "TT\nhh\nee\n\nfs\nie\nrc\nso\ntn\n d\nl\nil\nni\nen\n.e\n ."
     assert_equal expected, Transpose.transpose(input)
   end
 
@@ -71,7 +69,6 @@ class TransposeTest < Minitest::Test
     input = "The longest line.\nA long line.\nA longer line.\nA line."
 
     expected = "TAAA\nh   \nelll\n ooi\nlnnn\nogge\nn e.\nglr\nei \nsnl\ntei\n .n\nl e\ni .\nn\ne\n."
-
     assert_equal expected, Transpose.transpose(input)
   end
 
@@ -98,7 +95,6 @@ class TransposeTest < Minitest::Test
     input = "T\nEE\nAAA\nSSSS\nEEEEE\nRRRRRR"
 
     expected = "TEASER\n EASER\n  ASER\n   SER\n    ER\n     R"
-
     assert_equal expected, Transpose.transpose(input)
   end
 end
