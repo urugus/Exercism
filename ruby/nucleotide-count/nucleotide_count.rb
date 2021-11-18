@@ -1,7 +1,23 @@
-=begin
-Write your code for the 'Nucleotide Count' exercise in this file. Make the tests in
-`nucleotide_count_test.rb` pass.
+class Nucleotide
+  BASES = %W[A T C G].freeze
 
-To get started with TDD, see the `README.md` file in your
-`ruby/nucleotide-count` directory.
-=end
+  def initialize(dna)
+    @dna = dna
+  end
+
+  def count(base)
+    @dna.count(base)
+  end
+
+  def histogram
+    BASES.each_with_object({}){|b, h| h[b] = @dna.count(b)}
+  end
+ 
+  class << self
+    def from_dna(dna)
+      regex = Regexp.new("^[#{BASES}]*$")
+      raise ArgumentError unless dna.match?(regex)
+      Nucleotide.new(dna)
+    end
+  end
+end
