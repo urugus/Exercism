@@ -10,11 +10,14 @@ class Grep
     def grep(pattern, flags, files)
       files.each_with_object([]){|file_name, a|
         # もし複数ファイル参照していた場合は、先頭にファイル名をつける
-        a << Lines.new(file_name).output(pattern, flags).map{|l|
-          !flags.include?('-l') && files.size > 1 ?
-          "#{file_name}:#{l}" : l
-        }.join("\n")
-      }.join("\n")
+        lines = Lines.new(file_name).output(pattern, flags)
+        lines.nil? ? 
+        ''
+        : a << lines.map{|l|
+                !flags.include?('-l') && files.size > 1 ?
+                "#{file_name}:#{l}" : l
+              }.reject(&:empty?).join("\n")
+            }.reject(&:empty?).join("\n")
     end
     
   end
@@ -27,22 +30,22 @@ class Lines
     @name = file_name
     @lines = File.read(file_name).split("\n")
   end
+
+  # 文字列とフラグから正規表現を返す
+  def adjust_regex(pattern, flags)
+    pattern = "^#{pattern}$" if flags.include?('-x')
+    flags.include?('-i') ?
+      Regexp.new(pattern.downcase, Regexp::IGNORECASE) : Regexp.new(pattern)
+  end
   
   def output(pattern, flags)
-    regexp_of_flags = {
-      '-i' => Regexp.new(pattern, Regexp::IGNORECASE),
-      '-x' => Regexp.new("^#{pattern}$")
-    }
-    @lines.map!.with_index{|l, idx| flags.include?('-n') ? "#{idx+1}:#{l}" : l }
+    # @lines.map!.with_index{|l, idx| flags.include?('-n') ? "#{idx+1}:#{l}" : l }
     
-    output_lines = pick_up_from_lines(Regexp.new(pattern))
-    regexp_of_flags.each{|flag, reg|
-      output_lines = @lines & pick_up_from_lines(reg) if flags.include?(flag)
-    }
+    output_lines = pick_up_from_lines(adjust_regex(pattern, flags), flags)
+    # binding.irb
     output_lines = @lines - output_lines if flags.include?('-v')
-    
     if flags.include?('-l')
-      @name unless output_lines.empty?
+      [@name] unless output_lines.empty?
     else
       output_lines
     end
@@ -51,9 +54,16 @@ class Lines
 
   private
 
-    def pick_up_from_lines(regexp)
-      @lines.each_with_object([]){|l, a|
-        a << l if l.match?(regexp)
+    def pick_up_from_lines(regexp, flags)
+      @lines.each_with_index.inject([]){|a, (l, idx)|
+        # binding.irb
+        if l.match?(regexp)
+          l = "#{idx+1}:#{l}" if flags.include?('-n')
+          a << l
+        else
+          a
+        end
+
       }
     end
 end
