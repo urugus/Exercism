@@ -1,14 +1,15 @@
 module Bob (responseFor) where
 
-import Data.Char (isAlpha, isUpper)
+import Data.Char (isAlpha, isSpace, isUpper)
 
 responseFor :: String -> String
 responseFor input
+  | null trimmed = "Fine. Be that way!"
   | isClaim && isQuestion = "Calm down, I know what I'm doing!"
   | isQuestion = "Sure."
-  | null input = "Fine. Be that way!"
   | isClaim = "Whoa, chill out!"
   | otherwise = "Whatever."
   where
-    isQuestion = last input == '?'
-    isClaim = all isUpper (filter isAlpha input)
+    trimmed = filter (not . isSpace) input
+    isQuestion = last trimmed == '?'
+    isClaim = all isUpper (filter isAlpha trimmed) && any isAlpha trimmed
